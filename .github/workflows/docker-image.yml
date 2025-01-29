@@ -3,8 +3,6 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
 
@@ -13,8 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Hacer checkout
+      uses: actions/checkout@v4
+
+    - name: Loguearse en docker
+      run: |
+        echo "Logueandose"
+        docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
     # docker login -u adriicl
     # dckr_pat_8IehFBfC2qJJjDd8qt626w1vdyU
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    # name: Build the Docker image
+     # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
