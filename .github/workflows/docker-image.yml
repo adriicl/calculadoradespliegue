@@ -20,5 +20,5 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
     # docker login -u adriicl
     # dckr_pat_8IehFBfC2qJJjDd8qt626w1vdyU
-    # name: Build the Docker image
-     # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag adriicl/calculadora:latest
