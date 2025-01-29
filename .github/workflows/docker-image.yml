@@ -21,4 +21,7 @@ jobs:
     # docker login -u adriicl
     # dckr_pat_8IehFBfC2qJJjDd8qt626w1vdyU
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag adriicl/calculadora:latest
+      run: docker build -t adriicl/calculadora:latest .
+
+    - name: Subiendo imagen 
+      run: docker push adriicl/calculadora:latest
