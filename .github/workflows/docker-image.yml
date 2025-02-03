@@ -5,9 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -22,11 +20,12 @@ jobs:
         echo "Logueándose en Docker Hub..."
         docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
 
-    - name: Construir y subir la imagen de Docker
+    - name: Construir y subir la imagen de Docker (Multiplataforma)
       uses: docker/build-push-action@v6.13.0
       with:
         context: .
         file: ./Dockerfile
+        platforms: linux/amd64,linux/arm64,linux/arm/v7
         push: true
         tags: adriicl/calculadora:latest
         cache-from: type=registry,ref=adriicl/calculadora:latest
