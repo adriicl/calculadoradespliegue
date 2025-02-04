@@ -8,10 +8,21 @@ jobs:
   tests:
     runs-on: ubuntu-24.04
     steps:
+      - name: Hacer checkout del repositorio
+        uses: actions/checkout@v4
+
       - name: Instalar PHP
         uses: shivammathur/setup-php@2.32.0
         with:
-          php-version: "8.1"
+          php-version: "8.2"
+          extensions: mbstring, pdo, pdo_mysql
+
+      - name: Cache de dependencias de Composer
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
 
       - name: Instalar dependencias
         run: composer install --no-interaction --prefer-dist --no-progress
