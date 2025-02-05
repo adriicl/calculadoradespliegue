@@ -39,6 +39,10 @@ jobs:
           echo "Logueándose en Docker Hub..."
           docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
 
+      - name: Obtener tag actual
+        id: tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       - name: Construir y subir la imagen de Docker (Multiplataforma)
         uses: docker/build-push-action@v6.13.0
         with:
@@ -46,6 +50,8 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: adriicl/calculadora:latest
+          tags: |
+            adriicl/calculadora:${{ env.TAG_NAME }}
+            adriicl/calculadora:latest
           cache-from: type=registry,ref=adriicl/calculadora:latest
           cache-to: type=inline
